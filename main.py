@@ -35,7 +35,6 @@ local_vols = dupire(F, k_arr, vols, e, dt=0.01, dk=0.01)
 # plt.plot(local_vols.iloc[:, 1])
 # plt.show()
 
-
 ########################################################################################################################################
 # Simulation parameters
 time_step = 250
@@ -70,19 +69,20 @@ np.random.seed(1234567)
 
 # LV model
 spot_lv = LV(r, vols, T, S0, time_step, nbr_sim)
+
 plt.plot(spot_lv)
 plt.show()
 
 # LSV model
-spot_lsv, vol_lsv = LSV(r, v, T, S0, V0, kappa, theta, xi, rho, time_step, nbr_sim, nbr_bins)
+# spot_lsv, vol_lsv = LSV(r, v, T, S0, V0, kappa, theta, xi, rho, time_step, nbr_sim, nbr_bins)
 
 # Vanilla price calculation
 call_gbm, call_sv, call_lv, call_lsv = 0, 0, 0, 0
 for i in range(nbr_sim):
-    call_gbm += act * Call(spot_gbm[-1, i], K) / nbr_sim 
-    call_sv += act * Call(spot_sv[-1, i], K) / nbr_sim
+    # call_gbm += act * Call(spot_gbm[-1, i], K) / nbr_sim 
+    # call_sv += act * Call(spot_sv[-1, i], K) / nbr_sim
     call_lv += act * Call(spot_lv[-1, i], K) / nbr_sim
-    call_lsv += act * Call(spot_lsv[-1, i], K) / nbr_sim
+    # call_lsv += act * Call(spot_lsv[-1, i], K) / nbr_sim
 
 print('Call BS =', round(Call_BS(S0, K, T, r, v), 3))
 print('Call GBM =', round(call_gbm, 3))
