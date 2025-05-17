@@ -22,7 +22,7 @@ def dupire_vol(vol, k, t):
     return lv
 
 
-def LV(r, sigma, T, S0, time_step, nbr_sim):
+def LV(r, v, T, S0, time_step, nbr_sim):
 
     dt = T / time_step
     spot_prices = np.zeros([time_step+1, nbr_sim])
@@ -32,7 +32,7 @@ def LV(r, sigma, T, S0, time_step, nbr_sim):
 
         for n in range(nbr_sim):
 
-            local_vol = dupire_vol(sigma, spot_prices[i - 1, n], i/365)
+            local_vol = dupire_vol(v, spot_prices[i - 1, n], i/time_step)
 
             W_S = np.random.standard_normal(1)
     
@@ -41,14 +41,14 @@ def LV(r, sigma, T, S0, time_step, nbr_sim):
     return spot_prices
 
 
-def HESTON(r, sigma, T, S0, V0, rho, kappa, theta, xi, time_step, nbr_sim):
+def HESTON(r, v, T, S0, V0, rho, kappa, theta, xi, time_step, nbr_sim):
     
     dt = T / time_step
 
     spot_prices = np.zeros([time_step+1, nbr_sim])
     spot_prices[0] = S0
     vol_paths = np.zeros([time_step+1, nbr_sim])
-    vol_paths[0] = V0
+    vol_paths[0] = get_interp_vol(v, S0, 0)
 
     for n in range(nbr_sim):
         for i in range(1, time_step+1):
@@ -72,16 +72,16 @@ def LSV(r, v, T, S0, V0, kappa, theta, xi, rho, time_step, nbr_sim, nbr_bins):
     spot_prices = np.zeros([time_step+1, nbr_sim])
     spot_prices[0] = S0
     vol_paths = np.zeros([time_step+1, nbr_sim])
-    vol_paths[0] = V0
+    vol_paths[0] = get_interp_vol(v, S0, 0)
 
-    L = V0
+    L = vol_paths[0, 0]
     # alpha_k = (nbr_bins / nbr_sim)
 
     for i in range(1, time_step+1):
         # print('Calculating LSV time step', i)
         for n in range(nbr_sim):
 
-            local_vol = dupire_vol(sigma, spot_prices[i - 1, n], i/365)
+            local_vol = dupire_vol(v, spot_prices[i - 1, n], i/time_step)
             vol1 = local_vol / np.sqrt(L)
             # print('vol du spot =', vol1)
 
