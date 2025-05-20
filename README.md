@@ -1,13 +1,15 @@
-# pricing equity autocallable structures using LSV model
+## pricing equity autocallable structures using LSV model
 
-## Product params
+### Product params
 
-## LV, SV, LSV
+### qinputs + SSVI
 
-## QMC
+### LV, SV, LSV
+
+### QMC
 
 Sobol
 
-## Worst-of
+### Worst-of
 
-### References
+#### References
