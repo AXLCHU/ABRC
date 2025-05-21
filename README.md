@@ -2,16 +2,23 @@
 
 ### Product parameters
 
-### Inputs SPX + SSVI
+- Antocall barrier H
+- Coupon 7%
+
+
+### Inputs
+
+SPX vol surface as of
+SSVI calibration to remove arbitrage
 
 ### LV, SV, LSV
 
-### Brownian Bridge
+#### Barrier
 
-### RQMC
+Brownian Bridge
 
-Sobol
+MC using RQMC Sobol sequence
 
 ### Worst-of
+basket of 2 indexes
 
-#### References
