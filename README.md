@@ -2,23 +2,25 @@
 
 ### Product parameters
 
+- 1Y maturity
+- 4 observation dates
 - Antocall barrier H
 - Coupon 7%
 
-
 ### Inputs
 
-SPX vol surface as of
+SPX vol surface as of 2024
 SSVI calibration to remove arbitrage
 
-### LV, SV, LSV
+### Pricing under LSV vs LV & SV
+
+QMC using randomized Sobol sequence
 
 #### Barrier
 
-Brownian Bridge
-
-MC using RQMC Sobol sequence
+Brownian Bridge for continuously monitored barrier
 
 ### Worst-of
-basket of 2 indexes
+
+Basket of 2 indexes
 
