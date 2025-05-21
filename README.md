@@ -4,13 +4,14 @@
 
 - 1Y maturity
 - 4 observation dates
-- Antocall barrier H
+- Autocall barrier H = 1
+- Coupon barrier B = 0.8
 - Coupon 7%
 
 ### Inputs
 
-SPX vol surface as of 2024
-SSVI calibration to remove arbitrage
+- SPX vol surface as of 2024
+- SSVI calibration to remove arbitrage
 
 ### Pricing under LSV vs LV & SV
 
@@ -20,7 +21,7 @@ QMC using randomized Sobol sequence
 
 Brownian Bridge for continuously monitored barrier
 
-### Worst-of
+### Worst-of case
 
 Basket of 2 indexes
 
