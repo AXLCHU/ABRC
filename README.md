@@ -1,12 +1,14 @@
-## pricing equity autocallable structures using LSV model
+## Pricing equity autocallable structures using LSV model
 
-### Product params
+### Product parameters
 
-### qinputs + SSVI
+### Inputs SPX + SSVI
 
 ### LV, SV, LSV
 
-### QMC
+### Brownian Bridge
+
+### RQMC
 
 Sobol
 
