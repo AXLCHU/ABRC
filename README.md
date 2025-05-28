@@ -10,7 +10,10 @@
 
 ### Inputs
 
-- SPX vol surface as of 2024
+- SPX vol surface as of 24/07/2024
+
+[iv_spx.pdf](https://github.com/user-attachments/files/20494332/iv_spx.pdf)
+
 - SSVI calibration to remove arbitrage
 
 ### Pricing under LSV vs LV & SV
