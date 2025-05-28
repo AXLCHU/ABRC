@@ -2,6 +2,7 @@
 
 ### Product parameters
 
+- Underlying = SPX
 - 1Y maturity
 - 4 observation dates
 - Autocall barrier H = 1
