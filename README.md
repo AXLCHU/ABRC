@@ -13,7 +13,7 @@
 
 - SPX vol surface as of 24/07/2024
 
-![iv_spx](https://github.com/user-attachments/assets/8a2e96bc-aa05-455d-ba74-0f810c41b7d6)
+![iv_spx](https://github.com/user-attachments/assets/7217789e-74c7-41cb-8b05-7319450b8e8f)
 
 - SSVI calibration to remove arbitrage
 
