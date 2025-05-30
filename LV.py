@@ -1,20 +1,9 @@
 import numpy as np
 import pandas as pd
 from scipy.stats import norm
+
+from payoffs import *
 from interpolations import *
-
-
-def black_forward_price(f, k, vol, t, r, option_type):
-
-    d1 = (np.log(f / k) + ((vol**2 / 2)*t) / (vol * np.sqrt(t)))
-    d2 = d1 - vol * np.sqrt(t)
-
-    if option_type == 'call':
-        price = np.exp(-r*t) * (f*norm.cdf(d1) - k*norm.cdf(d2))
-    elif option_type == 'put':
-        price = np.exp(-r*t) * (k*norm.cdf(-d2) - f*norm.cdf(-d1))
-    
-    return price
 
 
 def get_interp_vol(vol, k, t): # put TtM in cols
@@ -35,18 +24,18 @@ def dupire(f, k, vol, t, dt=0.001, dk=0.001):
         for i in range(len(k)):
 
             strike = k[i]
-            y = np.log(k[i]/f.forward[j])
+            y = np.log(strike/f.forward[j])
 
             sigma = vol.iloc[i, j]
             w = (sigma**2) * t[j]
 
             # vol derivatives
             dT = (linear_interpolation(t[j] + dt, t, vol.iloc[i, :].tolist()) - linear_interpolation(t[j] - dt, t, vol.iloc[i, :].tolist())) / (2*dt)
-            dK = (cubic_interpolation([k[i] + dk], k, vol.iloc[:, j].tolist()) - cubic_interpolation([k[i] - dk], k, vol.iloc[:, j].tolist())) / (2*dk)
-            dKK = (cubic_interpolation([k[i] + dk], k, vol.iloc[:, j].tolist()) - 2*sigma + cubic_interpolation([k[i] - dk], k, vol.iloc[:, j].tolist())) / (dk**2)
+            dK = (cubic_interpolation([strike + dk], k, vol.iloc[:, j].tolist()) - cubic_interpolation([strike - dk], k, vol.iloc[:, j].tolist())) / (2*dk)
+            dKK = (cubic_interpolation([strike + dk], k, vol.iloc[:, j].tolist()) - 2*sigma + cubic_interpolation([strike - dk], k, vol.iloc[:, j].tolist())) / (dk**2)
 
             # tvar derivatives
-            dwT = sigma**2 + 2*sigma*dT*t[j]
+            dwT = sigma**2 + 2*sigma*dT*t[j] # *(r*strike*dK)
             dwK = 2*t[j]*sigma*dK
             dwKK = 2*t[j]*(dwK**2 + sigma*dKK)
 
@@ -63,10 +52,15 @@ def dupire(f, k, vol, t, dt=0.001, dk=0.001):
     return pd.DataFrame(LV, columns=t, index=k)
 
 
-def get_local_vols(K, T):
+def dupire_vol(vol, k, t):
+
     # calibrate market vols to local vols using dupire formula
     # when diffusing the spot, use interpolation to find the LV in the LV grid
-    return 1
+
+    lv = get_interp_vol(vol, k, t)
+    # dupire(f, k, vol, t, dt=0.001, dk=0.001)
+    
+    return lv
 
 
 def dupire_price(vol, f, k, t, dt, dk):

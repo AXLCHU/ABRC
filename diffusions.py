@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 from LV import *
+from payoffs import *
 
 
 def GBM(r, sigma, T, S0, time_step, nbr_sim):
@@ -15,13 +16,6 @@ def GBM(r, sigma, T, S0, time_step, nbr_sim):
     return gbm
 
 
-def dupire_vol(vol, k, t):
-
-    lv = get_interp_vol(vol, k, t)
-    
-    return lv
-
-
 def LV(r, v, T, S0, time_step, nbr_sim):
 
     dt = T / time_step
@@ -29,13 +23,9 @@ def LV(r, v, T, S0, time_step, nbr_sim):
     spot_prices[0] = S0
 
     for i in range(1, time_step+1):
-
         for n in range(nbr_sim):
-
             local_vol = dupire_vol(v, spot_prices[i - 1, n], i/time_step)
-
             W_S = np.random.standard_normal(1)
-    
             spot_prices[i, n] = spot_prices[i - 1, n] + spot_prices[i - 1, n] * (r * dt + max(local_vol, 0) * np.sqrt(dt) * W_S)
     
     return spot_prices
