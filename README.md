@@ -32,5 +32,5 @@ QMC bins method using randomized Sobol sequence
 
 Brownian Bridge for continuously monitored barrier
 
-### To do: Worst-of case basket of multiple indexes
+#### To do: Worst-of case basket of multiple indexes
 
