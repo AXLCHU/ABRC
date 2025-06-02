@@ -19,8 +19,7 @@
 
 ### Pricing under LSV
 
-MC bins method
-QMC using randomized Sobol sequence
+QMC bins method using randomized Sobol sequence
 
 ![abrc_price](https://github.com/user-attachments/assets/a107a222-ec31-4233-b6ea-7bbb1577d69a)
 
@@ -33,7 +32,5 @@ QMC using randomized Sobol sequence
 
 Brownian Bridge for continuously monitored barrier
 
-### Worst-of case
-
-Basket of 2 indexes
+### To do: Worst-of case basket of multiple indexes
 
