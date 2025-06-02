@@ -5,8 +5,8 @@
 - Underlying = SPX
 - 1Y maturity
 - 4 observation dates
-- Autocall barrier H = 1
-- Coupon barrier B = 0.8
+- Autocall barrier H = 100%
+- Coupon barrier B = 80%
 - Coupon 7%
 
 ### Inputs
