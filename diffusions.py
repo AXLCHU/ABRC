@@ -71,7 +71,8 @@ def LSV(r, v, T, S0, V0, kappa, theta, xi, rho, time_step, nbr_sim, nbr_bins):
         # print('Calculating LSV time step', i)
         for n in range(nbr_sim):
 
-            local_vol = dupire_vol(v, spot_prices[i - 1, n], i/time_step)
+            local_vol = dupire_vol(v, spot_prices[i - 1, n], i/time_step) ###
+
             vol1 = local_vol / np.sqrt(L)
             # print('vol du spot =', vol1)
 
