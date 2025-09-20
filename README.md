@@ -15,7 +15,7 @@ Particle method: bins Monte Carlo with 300,000 paths and 20 bins
 
 ![lsv_iv_sp500](https://github.com/user-attachments/assets/ba29aeda-2895-466b-8d97-a1715453cd5a)
 
--> Vols from LSV always higher than LV ones + better fit 
+-> Vols from LSV higher than LV ones + better fit 
 
 
 ### Pricing the Autocall
