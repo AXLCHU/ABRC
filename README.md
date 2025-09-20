@@ -1,6 +1,6 @@
-## Pricing equity autocallable structures using Local Stochastic Volatility model
+### Pricing equity autocallable structures using Local Stochastic Volatility model
 
-### Product parameters
+#### Product parameters
 
 - Underlying = SPX vol surface as of 30/06/2025
 - 1Y maturity
@@ -9,17 +9,19 @@
 - Coupon barrier B = 80%
 - Coupon 7%
 
-### Fitting the vols
+#### Fitting the vols
 
 Particle method, bins Monte Carlo method
 
 ![lsv_iv_sp500](https://github.com/user-attachments/assets/4acbe621-c966-4136-9119-a084c58e936b)
 
-### Pricing the Autocall
+-> Vols from LSV always higher than LV ones + better fit 
+
+
+#### Pricing the Autocall
 
 ![abrc_price](https://github.com/user-attachments/assets/a107a222-ec31-4233-b6ea-7bbb1577d69a)
 
--> Vols from LSV always higher than LV ones + better fit 
 
 #### Greeks
 
