@@ -1,4 +1,4 @@
-## Pricing equity autocallable structures using Local Stochastic Volatility model
+## Pricing Equity Autocallable structures using Local Stochastic Volatility model
 
 ### Product parameters
 
