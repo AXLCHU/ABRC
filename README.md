@@ -9,7 +9,7 @@
 - Coupon barrier B = 80%
 - Coupon 7%
 
-### Fitting the vols, LV vs LSV
+### Fitting the vols, IV from LV vs LSV
 
 Particle method: bins Monte Carlo with 300,000 paths and 20 bins
 
