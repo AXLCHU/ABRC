@@ -1,27 +1,21 @@
-## Pricing equity autocallable structures using LSV model
+## Pricing equity autocallable structures using Local Stochastic Volatility model
 
 ### Product parameters
 
-- Underlying = SPX
+- Underlying = SPX vol surface as of 30/06/2025
 - 1Y maturity
 - 4 observation dates
 - Autocall barrier H = 100%
 - Coupon barrier B = 80%
 - Coupon 7%
 
-### Inputs
-
-- SPX vol surface as of 24/07/2024
-
-![iv_spx](https://github.com/user-attachments/assets/7217789e-74c7-41cb-8b05-7319450b8e8f)
-
-- SSVI calibration to remove arbitrage
-
 ### Pricing under LSV
 
-QMC bins method using randomized Sobol sequence
+Particle method, bins Monte Carlo method
 
 ![abrc_price](https://github.com/user-attachments/assets/a107a222-ec31-4233-b6ea-7bbb1577d69a)
+
+-> Vols from LSV always higher than LV ones + better fit 
 
 #### Greeks
 
@@ -32,5 +26,5 @@ QMC bins method using randomized Sobol sequence
 
 Brownian Bridge for continuously monitored barrier
 
-#### To do: Worst-of case basket of multiple indexes
+#### To do: Worst-of basket of multiple indexes
 
