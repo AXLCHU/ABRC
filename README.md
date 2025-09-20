@@ -9,9 +9,13 @@
 - Coupon barrier B = 80%
 - Coupon 7%
 
-### Pricing under LSV
+### Fitting the vols
 
 Particle method, bins Monte Carlo method
+
+![lsv_iv_sp500](https://github.com/user-attachments/assets/4acbe621-c966-4136-9119-a084c58e936b)
+
+### Pricing the Autocall
 
 ![abrc_price](https://github.com/user-attachments/assets/a107a222-ec31-4233-b6ea-7bbb1577d69a)
 
