@@ -13,7 +13,7 @@
 
 Particle method: bins Monte Carlo with 300,000 paths and 20 bins
 
-![lsv_iv_sp500](https://github.com/user-attachments/assets/4acbe621-c966-4136-9119-a084c58e936b)
+![lsv_iv_sp500](https://github.com/user-attachments/assets/ba29aeda-2895-466b-8d97-a1715453cd5a)
 
 -> Vols from LSV always higher than LV ones + better fit 
 
@@ -21,8 +21,6 @@ Particle method: bins Monte Carlo with 300,000 paths and 20 bins
 ### Pricing the Autocall
 
 ![abrc_price](https://github.com/user-attachments/assets/a107a222-ec31-4233-b6ea-7bbb1577d69a)
-
--> Price of product is higher when using LSV than with LV 
 
 
 ### Greeks
