@@ -31,7 +31,9 @@ LSV using Particle method: bins Monte Carlo with 300,000 paths and 20 bins
 
 ### Barrier
 
-Brownian Bridge for continuously monitored barrier
+Probability of crossing barriers using Brownian Bridge for continuously monitored barrier
 
-### To do: Worst-of basket of multiple indexes
+### To do
+
+- Worst-of basket of multiple indexes
 
