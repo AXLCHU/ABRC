@@ -43,20 +43,6 @@ def bs_vega(S, K, T, r, sigma):
     return S * norm.pdf(d1) * np.sqrt(T)
 
 
-# def iv_black(w, f, k, t, r, p, x0=1):
-#     MAX_ITERATIONS = 150
-#     PRECISION = 1.0e-5
-#     x0 = 0.5
-#     for i in range(0, MAX_ITERATIONS):
-#         price = black_forward_price(w, f, k, t, x0, r)
-#         vega = bs_vega(f, k, t, r, x0)
-#         diff = p - price  # our root
-#         if (abs(diff) < PRECISION):
-#             return x0
-#         x0 = x0 + diff/vega # f(x) / f'(x)
-#     return x0
-
-
 def get_interp_vol2(vol, k, t):
     """
     k: list or float; t float
@@ -275,28 +261,23 @@ def SLV_IV(spot, bs_vols, fwd, step_grid, rho, kappa, theta, xi, nbr_bins, nb_pa
                 lv = np.interp(S_t[t - 1], step_grid_down['strike'].values, step_grid_down['lv'].values) * d + np.interp(S_t[t - 1], step_grid_up['strike'].values, step_grid_up['lv'].values) * (1 - d) 
 
             vol1 = lv / np.sqrt(L)
-            S_t[t] = S_t[t-1] + r*S_t[t-1]*dt + vol1*np.sqrt(V_t[t-1])*W_S[t-1]*np.sqrt(dt)*S_t[t-1] # Euler-Maruyama
+            S_t[t] = S_t[t-1] + r*S_t[t-1]*dt + vol1*np.sqrt(V_t[t-1])*W_S[t-1]*np.sqrt(dt)*S_t[t-1]
             V_t[t] = V_t[t - 1] + kappa * (theta - V_t[t - 1]) * dt + xi * np.sqrt(V_t[t - 1] * dt) * W_V[t-1]
-            # V_t[t] = V_t[t - 1] + kappa * (theta - V_t[t - 1]) * dt + xi * np.sqrt(max(V_t[t - 1], 0) * dt) * W_V
 
-            # concat
             spot_vol = pd.concat([pd.DataFrame(S_t[t]), pd.DataFrame(V_t[t])], axis=1)
             spot_vol.columns = ['spot', 'vol']
-            # order
             spot_vol_sorted = spot_vol.sort_values('spot') # long
             spot_vol_sorted = spot_vol_sorted.reset_index(drop=True)
-            # mean from l bins = conditional expectation used for next time step
             bin = 0
             for l in range(nbr_bins):
                 bin_mean = spot_vol_sorted.loc[l*nbr_bins:(l+1)*nbr_bins, 'vol'].mean() 
-                bin += bin_mean # sum of means
+                bin += bin_mean
             L = bin
 
         sim_e[j] = S_t[t]
 
     calls_mc = bs_vols.copy()
     puts_mc = bs_vols.copy()
-    # calculate MC price and convert price to IV
     for i, e in enumerate(bs_vols.columns):
         for j, k in enumerate(bs_vols.index):
             calls_mc.iat[j, i] = np.exp(-fwd['rate'].values[i] * e) * np.mean(np.maximum(sim_e[i] - k, 0.0))
