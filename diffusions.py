@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from LV import *
+from SLV import *
 from payoffs import *
 
 
