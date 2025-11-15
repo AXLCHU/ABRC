@@ -12,15 +12,14 @@ def black_forward_price(w, f, k, t, vol, r):
     d1 = (np.log(f / k) + 0.5 * (vol**2) * t) / (vol * np.sqrt(t))
     d2 = d1 - vol * np.sqrt(t)
     price = np.exp(-r * t) * (w * f * ndtr(w * d1) - w * k * ndtr(w * d2))
-    # price = np.exp(-r * t) * (w * f * norm.cdf(w * d1) - w * k * norm.cdf(w * d2))
     return price
 
 
 def iv_black(w, f, k, t, r, p, x0=1):
     # Newton - Raphson algo 1st order difference
-    maxIter = 10000 # orig 10000
-    dVol = 0.001 # orig 0.0001
-    eps = 10**(-8) # orig 10**(-8)
+    maxIter = 10000 
+    dVol = 0.001 
+    eps = 10**(-8) 
     i = 0
     a = black_forward_price(w, f, k, t, x0, r)
     # sigma = sigma + diff/vega # f(x) / f'(x)
@@ -102,79 +101,6 @@ def get_local_vols(vols, t, k, f_start, f_end, dt=0.001, dk=0.001):
     den = 1 - (y/w)*dwdy + 0.25*(-0.25 - 1/w + (y/w)**2)*(dwdy**2) + 0.5*d2wdy2
 
     return vols, num, den, np.sqrt(num / den)
-
-
-def get_new_strike_grid(tenors, fwd, vol_atf, increment=0.05):
-
-    q = np.zeros([43])
-
-    q[0] = 0.001
-    q[1] = 0.01    
-    q[-2] = 1.99
-    q[-1] = 1.999
-    q[21] = 1
-
-    for i in range(2, 21):
-        q[i] = q[i-1] + increment
-    for i in range(22, 41):
-        q[i] = q[i-1] + increment
-    
-    K_up = np.zeros([len(tenors)])
-    K_down = np.zeros([len(tenors)])
-    d1_up = np.zeros([len(tenors)])
-    d1_down = np.zeros([len(tenors)])
-    d2_up = np.zeros([len(tenors)])
-    d2_down = np.zeros([len(tenors)])
-    call_up = np.zeros([len(tenors)])
-    call_down = np.zeros([len(tenors)])
-    p_atm = np.zeros([len(tenors)])
-
-    fwd = fwd['forward']
-
-    for e in range(len(tenors)):
-
-        K_up[e] = fwd[e] * (1 + 1 / 10000)
-        K_down[e] = fwd[e] * (1 - 1 / 10000)
-
-        d1_up[e] = (np.log(fwd[e]/K_up[e]) + 0.5 * tenors[e] * vol_atf[e]**2) / (vol_atf[e] * np.sqrt(tenors[e]))
-        d1_down[e] = (np.log(fwd[e]/K_down[e]) + 0.5 * tenors[e] * vol_atf[e]**2) / (vol_atf[e] * np.sqrt(tenors[e]))
-
-        d2_up[e] = d1_up[e] - vol_atf[e] * np.sqrt(tenors[e])
-        d2_down[e] = d1_down[e] - vol_atf[e] * np.sqrt(tenors[e])
-
-        call_up[e] = fwd[e] * norm.cdf(d1_up[e]) - K_up[e] * norm.cdf(d2_up[e])
-        call_down[e] = fwd[e] * norm.cdf(d1_down[e]) - K_down[e] * norm.cdf(d2_down[e])
-
-        p_atm[e] = 1 - (call_down[e] - call_up[e]) / (2 * fwd[e] / 10000)
-
-    results = np.zeros([len(tenors), 43])
-    results[:, 21] = fwd
-    for e in range(len(tenors)):
-        for k in range(21):
-            results[e, k] = fwd[e] * np.exp(-0.5 * vol_atf[e]**2 + vol_atf[e] * norm.ppf(q[k] * p_atm[e]))
-        for k in range(22, 43):
-            results[e, k] = fwd[e] * np.exp(-0.5 * vol_atf[e]**2 + vol_atf[e] * norm.ppf(1 - (2 - q[k]) * (1 - p_atm[e])))
-
-    return results
-
-
-def get_new_strike_grid2(strikes, nbr_strikes):
-    strike2 = np.linspace(strikes[0] - strikes[0]*0.15, strikes[-1] + strikes[-1]*0.15, nbr_strikes)
-    new_strikes = np.concatenate((strikes, strike2))
-    new_strikes = np.sort(new_strikes)
-    return new_strikes
-
-
-def get_new_expiry_grid(expiries):
-    t = [i for i in range(1, 21)]
-    t += [5*i + 20 for i in range(1, 60)]
-    t += [20*i + 20 for i in range(15, int(expiries[-1]))]
-    t = [item for item in t if item < int(expiries[-1]) and item > int(expiries[0])]
-    t += expiries
-    t = list(set(t))
-    t = sorted(t)
-    t2 = [tt / 365 for tt in t]
-    return t, t2
 
 
 def lv_grid(spot, vols, fwd, exp_vol_grid):
