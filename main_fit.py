@@ -6,7 +6,7 @@ import os
 
 from def_fcts import *
 from utils import *
-from LV import *
+from SLV import *
 
 
 config = configparser.ConfigParser()
