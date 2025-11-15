@@ -15,8 +15,8 @@ LSV using Particle method: bins Monte Carlo with 300,000 paths and 20 bins
 
 ![lsv_iv_sp500](https://github.com/user-attachments/assets/ba29aeda-2895-466b-8d97-a1715453cd5a)
 
--> Vols from LSV creates higher forward smiles compared to LV
--> Wings of short maturities are harder to fit
+- Vols from LSV creates higher forward smiles compared to LV
+- Wings of short maturities are harder to fit
 
 
 ### Pricing the Autocall
