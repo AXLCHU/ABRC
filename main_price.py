@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 from payoffs import *
 from diffusions import *
-from LV import *
+from SLV import *
 
 
 # Import market IV surface
