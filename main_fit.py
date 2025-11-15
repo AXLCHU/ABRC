@@ -5,15 +5,15 @@ import configparser
 import os
 
 from def_fcts import *
-from svi_utils import *
+from utils import *
 from LV import *
 
 
 config = configparser.ConfigParser()
 config.read('parameters.ini')
 
-inpath = r'C:\Users\axelc\OneDrive\Documents\PY\ABRC\inputs'
-outpath = r'C:\Users\axelc\OneDrive\Documents\PY\ABRC\outputs\20250630'
+inpath = r'...\ABRC\inputs'
+outpath = r'...\outputs'
 
 COB = '2025-06-30'
 COB_P = datetime.strptime(COB, '%Y-%m-%d').date()
@@ -24,7 +24,6 @@ F = pd.read_csv(os.path.join(inpath, COB.replace('-',''), 'forward_sp500.csv'), 
 spot = 6204.95 # 20250630
 
 eq_expiries = [(datetime.strptime(d, '%d/%m/%Y').date() - COB_P).days for d in vols.columns.values]
-# eq_expiries = [(datetime.strptime(d, '%Y-%m-%d').date() - COB_P).days for d in vols.columns.values]
 e = [eq / 365 for eq in eq_expiries]
 
 vol_atf, k, k_arr, deltas, z_deltas, log_forward_deltas, w = get_variables(spot, F, vols, e)
@@ -46,19 +45,19 @@ grid = pd.read_csv(os.path.join(inpath, COB.replace('-',''), 'grid_test.csv'), d
 calib_grid = lv_grid(spot, vols, F, grid)
 calib_grid.to_csv(os.path.join(outpath, 'lv_sp500.csv'), index=None)
 
-# calls, St, lv_calls, lv_puts, calib_vols_call, calib_vols_put = LV_IV(spot, vols, F, calib_grid, nb_paths=50000)
+calls, St, lv_calls, lv_puts, calib_vols_call, calib_vols_put = LV_IV(spot, vols, F, calib_grid, nb_paths=50000)
 
-# LV = calib_vols_put.copy()
-# for j in range(len(LV.columns)):
-#     for i in range(len(LV.index)):
-#         if vols.index[i] >= F.forward[j]:
-#             LV.iloc[i, j] = calib_vols_call.iloc[i, j]
+LV = calib_vols_put.copy()
+for j in range(len(LV.columns)):
+    for i in range(len(LV.index)):
+        if vols.index[i] >= F.forward[j]:
+            LV.iloc[i, j] = calib_vols_call.iloc[i, j]
 
-# LV.to_csv(os.path.join(outpath, 'LV_sp500.csv'))
-# calib_vols_call.to_csv(os.path.join(outpath, 'LV_call_sp500.csv'))
-# calib_vols_put.to_csv(os.path.join(outpath, 'LV_put_sp500.csv'))
-# lv_calls.to_csv(os.path.join(outpath, 'calls_sp500.csv'))
-# lv_puts.to_csv(os.path.join(outpath, 'puts_sp500.csv'))
+LV.to_csv(os.path.join(outpath, 'LV_sp500.csv'))
+calib_vols_call.to_csv(os.path.join(outpath, 'LV_call_sp500.csv'))
+calib_vols_put.to_csv(os.path.join(outpath, 'LV_put_sp500.csv'))
+lv_calls.to_csv(os.path.join(outpath, 'calls_sp500.csv'))
+lv_puts.to_csv(os.path.join(outpath, 'puts_sp500.csv'))
 
 ############################################################################################################################
 # Calibrate SLV
