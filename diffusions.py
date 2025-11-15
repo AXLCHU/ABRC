@@ -65,16 +65,10 @@ def LSV(r, v, T, S0, V0, kappa, theta, xi, rho, time_step, nbr_sim, nbr_bins):
     vol_paths[0] = get_interp_vol(v, S0, 0)
 
     L = vol_paths[0, 0]
-    # alpha_k = (nbr_bins / nbr_sim)
-
     for i in range(1, time_step+1):
-        # print('Calculating LSV time step', i)
         for n in range(nbr_sim):
-
             local_vol = dupire_vol(v, spot_prices[i - 1, n], i/time_step) ###
-
             vol1 = local_vol / np.sqrt(L)
-            # print('vol du spot =', vol1)
 
             W_S = np.random.standard_normal(1)
             W_V = np.random.standard_normal(1)
@@ -82,23 +76,15 @@ def LSV(r, v, T, S0, V0, kappa, theta, xi, rho, time_step, nbr_sim, nbr_bins):
 
             spot_prices[i, n] = spot_prices[i - 1, n] + spot_prices[i - 1, n] * (r * dt + vol1 * max(vol_paths[i - 1, n], 0) * np.sqrt(dt) * W_S)
             vol_paths[i, n] = vol_paths[i - 1, n] + kappa * (theta - vol_paths[i - 1, n]) * dt + xi * np.sqrt(max(vol_paths[i - 1, n], 0) * dt) * W_V
-        # concat
+        
         spot_vol = pd.concat([pd.DataFrame(spot_prices[i, :]), pd.DataFrame(vol_paths[i, :])], axis=1)
         spot_vol.columns = ['spot', 'vol']
-        # order
-        spot_vol_sorted = spot_vol.sort_values('spot') # long
+        spot_vol_sorted = spot_vol.sort_values('spot')
         spot_vol_sorted = spot_vol_sorted.reset_index(drop=True)
-        # mean from l bins = conditional expectation used for next time step
         bin = 0
         for l in range(nbr_bins):
             bin_mean = spot_vol_sorted.loc[l*nbr_bins:(l+1)*nbr_bins, 'vol'].mean() 
-            # print('vol mean bin =', bin_mean)
-            bin += bin_mean # sum of means
-        # print(bin)
-        # L = alpha_k * bin
-        # L = bin / nbr_sim
+            bin += bin_mean
         L = bin
 
     return spot_prices, vol_paths
-
-
