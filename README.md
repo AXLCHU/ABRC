@@ -2,13 +2,13 @@
 
 ### Product overview
 
-Autocallable Note – 1Y, Quarterly Observations
+Autocallable Note 1Y, quarterly observations:
 
 - Underlying = SPX vol surface as of 30/06/2025
 - Autocall barrier H = 100%
 - Coupon barrier B = 80%
 - Coupon 7% p.a.
-- Key features: Early redemption if above 100%, coupon paid if above 80%, otherwise final redemption linked to SPX performance.
+- Key features: Early redemption if above 100%, coupon paid if above 80%, otherwise final redemption linked to SPX performance
 
 ### Model framework
 #### Local Volatility
